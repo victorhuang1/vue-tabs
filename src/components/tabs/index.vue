@@ -7,7 +7,7 @@
                 <li @click="toggleTab('third')" :class="classActive('third')">标签三</li>
             </ul>
         </div>
-        <first v-if="active('first')">
+        <!-- <first v-if="active('first')">
             标签一
         </first>
 
@@ -17,7 +17,9 @@
 
         <third v-else-if="active('third')">
             标签三
-        </third>
+        </third> -->
+
+        <component :is="active"></component>
 
     </div>
 </template>
@@ -39,6 +41,11 @@
                 activeName: 'first',
             }
         },
+        computed: {
+            active() {
+                return this.activeName;
+            }
+        },
         methods: {
             toggleTab(name) {
                 this.activeName = name;
@@ -46,9 +53,9 @@
             classActive(label) {
                 return this.activeName === label ? 'active' : ''
             },
-            active(label) {
+           /*  active(label) {
                 return this.activeName === label;
-            }
+            } */
         },
     }
 </script>
