@@ -19,22 +19,36 @@
             标签三
         </third> -->
 
-        <component :is="active"></component>
+        <!-- <component :is="active"></component> -->
+        <!-- 而 name 属性是 page 的 key 是静态值所以不需要 v-bind -->
+    <tab-page :current="activeName" name="first">
+      <b> 模板一 </b>
+    </tab-page>
+
+    <tab-page :current="activeName" name="second">
+      <b> 模板二 </b>
+    </tab-page>
+
+    <tab-page :current="activeName" name="third">
+      <b> 模板三 </b>
+    </tab-page>
 
     </div>
 </template>
 
 <script>
-    import first from './template/first';
+ /*    import first from './template/first';
     import second from './template/second';
-    import third from './template/third';
+    import third from './template/third'; */
+    import tabPage from "./tab-page";
 
     export default {
         name: 'tabs-index',
         components: {
-            first,
+            /* first,
             second,
-            third,
+            third, */
+            tabPage,
         },
         data() {
             return {
