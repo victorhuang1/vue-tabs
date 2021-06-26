@@ -1,4 +1,5 @@
 <template>
+  <!-- 通过 v-show 控制显示和隐藏 -->
   <div class="tabs-content" v-show="isActive">
     <slot></slot>
   </div>
@@ -6,24 +7,23 @@
 
 <script>
 export default {
+  inject: [],
   name: "tab-page",
   props: {
-    // 1、props
-    // 当前标签组的 key
-    current: {
+    //选项卡标题
+    label: {
       type: String,
       default: "",
     },
-    // 该标签页的key
+    // 与选项卡绑定值 value 对应的标识符，表示选项卡别名
     name: {
       type: String,
       default: "",
     },
-    },
-    computed: {
-    //   通过初始的名称，和当前的名称比较判断自己是否要显示
+  },
+  computed: {
     isActive() {
-      return this.name === this.current ? true : false;
+      return this.name === this.$parent.currentName ? true : false;
     },
   },
 };

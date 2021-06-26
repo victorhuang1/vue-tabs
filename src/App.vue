@@ -1,16 +1,17 @@
 <template>
   <div id="app">
-    <tabs-index></tabs-index>
+    <tab-test></tab-test>
   </div>
 </template>
 
 <script>
-  import tabsIndex from "./components/tabs";
+  import tabTest from "./tabTest";
 
   export default {
     name: "App",
     components: {
-      tabsIndex,
+     /*  tabsIndex, */
+      tabTest,
     },
   };
 </script>
