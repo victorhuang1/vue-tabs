@@ -68,7 +68,7 @@ export default {
     // 切换当前标签页
     const setCurrentName = (value) => {
       currentName.value = value;
-      // 告诉 v-model 改变
+      // 告诉 v-model 改变
       ctx.emit("input", value);
       ctx.emit("update:modelValue", value);
     };

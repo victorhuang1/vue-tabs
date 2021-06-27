@@ -1,48 +1,44 @@
 <template>
   <div>
-    <!-- <vue-tabs>
-      <tab-page label="用户管理" name="first">
-        <b> 模板一 </b>
-      </tab-page>
-
-      <tab-page label="配置管理" name="second">
-        <b> 模板二 </b>
-      </tab-page>
-
-      <tab-page label="角色管理" name="third">
-        <b> 模板三 </b>
-      </tab-page>
-    </vue-tabs> -->
-    <div>
+    <div style="padding: 20px;">
       <button class="button" @click="addTab">增加标签</button>
-      <button class="button">删除标签</button>
     </div>
-    <vue-tabs>
+    <vue-tabs
+      v-model="currentName"
+      @tab-remove="removeTab"
+      style="padding: 20px;"
+    >
+      <tab-page label="tab 0" name="0"
+        >这个标签页删不掉，因为它是静态的</tab-page
+      >
       <tab-page
         v-for="item in tabsList"
         :key="item.name"
         :label="item.label"
         :name="item.name"
-      ><b>{{item.content}}</b>
+      >
+        <b> {{ item.content }} </b>
       </tab-page>
     </vue-tabs>
-
   </div>
 </template>
 
 <script>
-import vueTabs from "./components/tabs/vue-tabs";
-import tabPage from "./components/tabs/tab-page";
+import vueTabs from "./components/packages/tabs";
+
+import tabPage from "./components/packages/tabPage";
 
 export default {
   name: "tab-test",
+
   components: {
     vueTabs,
     tabPage,
   },
-  /* props: {}, */
   data() {
     return {
+      //当前页面
+      currentName: undefined,
       tabsList: [
         { label: "tab 1", name: "1", content: "模板1" },
 
@@ -57,12 +53,31 @@ export default {
     addTab() {
       let newTabName = this.tabsList.length + 1 + "";
       let data = {
-        label: "tab 3",
+        label: "New Tab ",
         name: newTabName,
         content: "New Tab content",
       };
 
       this.tabsList.push(data);
+      // 将当前标签页切换到新增
+      this.currentName = newTabName;
+    },
+    removeTab(targetName) {
+      let tabs = this.tabsList;
+      let activeName = this.currentName;
+      if (activeName === targetName) {
+        tabs.forEach((tab, index) => {
+          if (tab.name === targetName) {
+            let nextTab = tabs[index + 1] || tabs[index - 1];
+            if (nextTab) {
+              activeName = nextTab.name;
+            }
+          }
+        });
+      }
+      this.currentName = activeName;
+      // 过滤掉选择删除的标签
+      this.tabsList = tabs.filter((tab) => tab.name !== targetName);
     },
   },
 };
